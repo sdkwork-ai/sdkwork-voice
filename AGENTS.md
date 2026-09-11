@@ -431,3 +431,49 @@ canonical repository command fail fast with guidance).
 - Authoritative specs: `MODULE_BIN_SPEC.md`, `DOCKER_SPEC.md`,
   `DEPLOYMENT_SPEC.md`, `OPERATIONS_SPEC.md`.
 <!-- /SDKWORK-DEPLOYMENT-STANDARD: scaffolded -->
+
+<!-- SDKWORK-DESTRUCTIVE-OPERATION-STANDARD: v1 -->
+## Destructive Operation Safety
+
+Authority: `../sdkwork-specs/DESTRUCTIVE_OPERATION_SPEC.md`.
+
+Deletion must be explicit, enumerated, and reviewable. Deleting by pattern instead of by named
+path is forbidden. Wildcards are for read-only commands only.
+
+- `git rm -r`, `git rm` over a directory or pattern, and `git clean -f`/`-fd`/`-fdx` are
+  FORBIDDEN. A recursive `git rm` stages many deletions in one index transaction; if the process
+  is interrupted (SIGTERM, timeout, sandbox kill, crash) entries are already gone from disk while
+  the index is only half-written, which is silent non-atomic mass data loss.
+- Delete tracked files with `rm <exact/path>` on each named path, let `git status --short`
+  record the `D` entries, then stage only the enumerated paths. Commit the deletion separately
+  from functional changes.
+- Shell and script deletion by wildcard is FORBIDDEN: `rm -rf`/`rm -r`/`rm -f` with
+  `*`/`**`/`?`/`[...]`/brace expansion, `find ... -delete`, `find ... -exec rm`,
+  `find ... | xargs rm`, `for f in *; do rm ...`, `del /S /Q`, `rd /S /Q`,
+  `Remove-Item -Recurse -Force` on a glob, `shutil.rmtree`, `fs.rm(dir, { recursive: true })`,
+  and `rimraf` over a glob.
+- A deletion MUST NOT be combined in one shell invocation with a build, install, network, or
+  publish step, and MUST NOT derive its targets from an unvalidated argument, environment
+  variable, or configuration value.
+- Permitted narrow deletion: `rm <exact/path>`; a short literal path list owned by the tool that
+  declares it; the module's own generated artifacts through its owning tool
+  (`pnpm clean`, `cargo clean`) per `CODE_STYLE_SPEC.md` §7; and
+  `git restore --worktree --source=HEAD -- <exact paths>`.
+- Required sequence before any deletion: enumerate exact paths; confirm every path resolves inside
+  the active repository or module root; classify tracked/generated/cached/unknown; prefer `rm`
+  plus tracked `git status`; delete in batches of 20 or fewer with a status check between
+  batches; report the removed paths and the authorizing decision.
+- Request explicit human confirmation before deleting any git-tracked path, any directory tree,
+  any path resolving outside the active repository root, or more than 20 paths.
+- Recovery after an accidental mass deletion: clear a stale `.git/index.lock`, write the path
+  list to a file INSIDE the repository (never `/tmp` on Windows, where the Git Bash path space
+  and the native tool path space disagree), and run a single
+  `git restore --worktree --pathspec-from-file=<repo-relative-list>`. Never loop one
+  version-control call per path; the same termination cause interrupts the loop part-way.
+
+Verification (from the repository root):
+
+```bash
+node ../sdkwork-specs/tools/sync-agent-destructive-operation-standard.mjs --root . --check
+```
+<!-- /SDKWORK-DESTRUCTIVE-OPERATION-STANDARD: v1 -->
