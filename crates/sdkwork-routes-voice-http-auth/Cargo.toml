@@ -1,10 +1,14 @@
 [package]
+rust-version.workspace = true
 name = "sdkwork-routes-voice-http-auth"
 version.workspace = true
 edition.workspace = true
 license.workspace = true
 publish = false
 
+
+[lints]
+workspace = true
 [lib]
 name = "sdkwork_routes_voice_http_auth"
 

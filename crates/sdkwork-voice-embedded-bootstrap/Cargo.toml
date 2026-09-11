@@ -1,4 +1,5 @@
 [package]
+rust-version.workspace = true
 name = "sdkwork-voice-embedded-bootstrap"
 version.workspace = true
 edition.workspace = true
@@ -6,6 +7,9 @@ license.workspace = true
 publish = false
 description = "Embedded voice application bootstrap for unified-process platform consumers."
 
+
+[lints]
+workspace = true
 [lib]
 name = "sdkwork_voice_embedded_bootstrap"
 

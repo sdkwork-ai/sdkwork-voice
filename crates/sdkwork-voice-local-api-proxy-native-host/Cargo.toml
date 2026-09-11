@@ -1,4 +1,5 @@
 [package]
+rust-version.workspace = true
 name = "sdkwork-voice-local-api-proxy-native-host"
 version.workspace = true
 edition.workspace = true
@@ -6,6 +7,9 @@ description = "Native runtime support for SDKWork Voice local API proxy."
 license = "UNLICENSED"
 publish = false
 
+
+[lints]
+workspace = true
 [lib]
 name = "sdkwork_voice_local_api_proxy_native_host"
 path = "src/lib.rs"

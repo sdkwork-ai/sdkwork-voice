@@ -1,4 +1,5 @@
 [package]
+rust-version.workspace = true
 name = "sdkwork-voice-drive-sync-processor"
 version.workspace = true
 edition.workspace = true
@@ -6,6 +7,9 @@ license.workspace = true
 publish = false
 description = "Processes voice artifact drive sync rows through SDKWork Drive persistence."
 
+
+[lints]
+workspace = true
 [lib]
 name = "sdkwork_voice_drive_sync_processor"
 

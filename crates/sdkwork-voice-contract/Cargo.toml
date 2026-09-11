@@ -1,10 +1,14 @@
 [package]
+rust-version.workspace = true
 name = "sdkwork-voice-contract"
 version.workspace = true
 edition.workspace = true
 license.workspace = true
 publish = false
 
+
+[lints]
+workspace = true
 [lib]
 name = "sdkwork_voice_contract"
 

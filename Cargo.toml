@@ -21,10 +21,26 @@ members = [
 ]
 
 [workspace.package]
+rust-version = "1.85"
 edition = "2021"
 version = "0.1.0"
 license = "AGPL-3.0-or-later"
 publish = false
+
+[workspace.lints.rust]
+# RUST_CODE_SPEC.md section 13 baseline.
+# Deny-tier lints (unsafe_code, panic, unwrap_used, expect_used, pedantic) are
+# promoted per crate together with their cleanup: enabling them fleet-wide
+# today floods or fails builds that have not paid that debt yet.
+unsafe_op_in_unsafe_fn = "warn"
+trivial_casts = "warn"
+trivial_numeric_casts = "warn"
+
+[workspace.lints.clippy]
+dbg_macro = "warn"
+todo = "warn"
+unimplemented = "warn"
+exit = "warn"
 
 [workspace.dependencies]
 rmcp = { version = "2.2.0", default-features = false, features = ["server", "macros", "schemars", "transport-io", "transport-streamable-http-server"] }

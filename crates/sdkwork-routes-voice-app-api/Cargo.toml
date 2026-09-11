@@ -1,4 +1,5 @@
 [package]
+rust-version.workspace = true
 name = "sdkwork-routes-voice-app-api"
 version.workspace = true
 edition.workspace = true
@@ -6,6 +7,9 @@ license.workspace = true
 publish = false
 description = "SDKWork Voice app API route handlers."
 
+
+[lints]
+workspace = true
 [lib]
 name = "sdkwork_routes_voice_app_api"
 

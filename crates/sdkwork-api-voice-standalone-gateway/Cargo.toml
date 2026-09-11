@@ -1,4 +1,5 @@
 [package]
+rust-version.workspace = true
 name = "sdkwork-api-voice-standalone-gateway"
 version.workspace = true
 edition.workspace = true
@@ -6,6 +7,9 @@ license.workspace = true
 publish = false
 description = "Standalone HTTP gateway for SDKWork Voice APIs."
 
+
+[lints]
+workspace = true
 [features]
 default = []
 otel = [

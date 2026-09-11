@@ -1,9 +1,13 @@
 [package]
+rust-version.workspace = true
 name = "sdkwork-voice-database-host"
 edition.workspace = true
 version.workspace = true
 description = "SDKWork Voice database lifecycle bootstrap."
 
+
+[lints]
+workspace = true
 [lib]
 name = "sdkwork_voice_database_host"
 path = "src/lib.rs"

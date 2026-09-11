@@ -8,6 +8,7 @@
   "scripts": {
     "stop": "pnpm exec sdkwork-app stop",
     "check:appbase": "node scripts/audit-appbase-voice-migration.mjs",
+    "check:cors-standard": "node ../sdkwork-specs/tools/check-cors-standard.mjs --root .",
     "api:materialize": "node sdks/materialize-voice-v3-openapi-boundaries.mjs",
     "check:api-envelope": "node ../sdkwork-specs/tools/check-api-response-envelope.mjs --workspace .",
     "check:docs": "node ../sdkwork-specs/tools/check-repository-docs-standard.mjs --root .",
@@ -37,7 +38,7 @@
     "_sdkwork:build": "cargo build --workspace --release",
     "_sdkwork:test": "vitest",
     "_sdkwork:check": "pnpm typecheck && pnpm --filter sdkwork-voice-pc typecheck && pnpm api:assembly:validate && pnpm check:app-composition",
-    "_sdkwork:verify": "pnpm typecheck && pnpm --filter @sdkwork/voice-contracts typecheck && pnpm --filter @sdkwork/voice-provider-adapter typecheck && pnpm --filter @sdkwork/voice-generation-worker typecheck && pnpm --filter @sdkwork/voice-drive-sync-worker typecheck && pnpm --filter sdkwork-voice-pc typecheck && pnpm test -- --run && pnpm run db:validate && pnpm run check:api-envelope && pnpm run check:docs && pnpm run check:app-composition && pnpm run api:assembly:validate && cargo test --workspace && pnpm check:appbase",
+    "_sdkwork:verify": "pnpm typecheck && pnpm --filter @sdkwork/voice-contracts typecheck && pnpm --filter @sdkwork/voice-provider-adapter typecheck && pnpm --filter @sdkwork/voice-generation-worker typecheck && pnpm --filter @sdkwork/voice-drive-sync-worker typecheck && pnpm --filter sdkwork-voice-pc typecheck && pnpm test -- --run && pnpm run db:validate && pnpm run check:api-envelope && pnpm run check:docs && pnpm run check:app-composition && pnpm run api:assembly:validate && cargo test --workspace && pnpm check:appbase && pnpm check:cors-standard",
     "_sdkwork:clean": "cargo clean",
     "dev": "pnpm dev:standalone",
     "dev:standalone": "pnpm exec sdkwork-app dev --deployment-profile standalone",
