@@ -1,5 +1,5 @@
 {
-  "schemaVersion": "2026-06-06.sdkwork.workflow.v1",
+  "schemaVersion": "2026-06-06.agent.workflow.v1",
   "app": {
     "id": "sdkwork-voice",
     "name": "SDKWork Voice",

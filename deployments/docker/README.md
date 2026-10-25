@@ -1,6 +1,6 @@
 # Docker Deployment
 
-Build and run the SDKWork Voice API container from the repository root (with sibling SDKWork repositories checked out per `sdkwork.workflow.json`, or after `pnpm install:ci-dependencies` in CI):
+Build and run the SDKWork Voice API container from the repository root (with sibling SDKWork repositories checked out per `agent.workflow.json`, or after `pnpm install:ci-dependencies` in CI):
 
 ```powershell
 docker build -f deployments/docker/Dockerfile -t sdkwork-voice:local .

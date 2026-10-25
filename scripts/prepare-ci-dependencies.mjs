@@ -6,7 +6,7 @@ import process from 'node:process';
 import { fileURLToPath } from 'node:url';
 
 const repoRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
-const workflowPath = path.join(repoRoot, 'sdkwork.workflow.json');
+const workflowPath = path.join(repoRoot, 'agent.workflow.json');
 const dependencyRoot = path.resolve(repoRoot, '..');
 const args = new Set(process.argv.slice(2));
 const jsonOutput = args.has('--json');
@@ -144,7 +144,7 @@ function materializeDependency(dependency) {
 
 const workflow = readWorkflow();
 if (!Array.isArray(workflow.dependencies)) {
-  throw new Error('sdkwork.workflow.json must declare dependencies[]');
+  throw new Error('agent.workflow.json must declare dependencies[]');
 }
 
 const dependencies = [...workflow.dependencies, ...staticDependencies];
