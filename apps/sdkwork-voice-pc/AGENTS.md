@@ -21,14 +21,14 @@ Do not copy root standard text into this application root. If these relative pat
 
 ## Application Identity
 
-Read `sdkwork.app.config.json` only when changing Voice PC embed behavior, runtime config, SDK wiring, release metadata, packaging, or app-owned capabilities.
+Read `agent.app.config.json` only when changing Voice PC embed behavior, runtime config, SDK wiring, release metadata, packaging, or app-owned capabilities.
 
 This directory is an **embed host**, not a standalone runnable shell. IM PC (`sdkwork-im-pc`) consumes `@sdkwork/voice-pc-market` and `@sdkwork/voice-pc-speech` through host integration (`voicePcIntegration.ts`).
 
 ## Local Dictionary Structure
 
 - `AGENTS.md`: application agent entrypoint and relative SDKWork spec index.
-- `sdkwork.app.config.json`: Voice PC application identity and release metadata.
+- `agent.app.config.json`: Voice PC application identity and release metadata.
 - `packages/`: embed packages (`voice-pc-market`, `voice-pc-speech`, `voice-pc-core`, `voice-pc-commons`).
 - `README.md`: embed package roles, host integration, and environment variables.
 

@@ -98,7 +98,7 @@ deployments/                       deploy.yaml for standalone/cloud parity
   - `VOICE_DRIVE_OBJECT_STORE_BUCKET` (default `voice-generated`)
 - Container: `deployments/docker/Dockerfile` → `sdkwork-api-voice-standalone-gateway` binary + `/app/database`; optional `otel` feature + `OTEL_EXPORTER_OTLP_ENDPOINT`
 - Request audit: `voice_request_log.trace_id` aligned with HTTP `traceId` from `sdkwork-web-framework`
-- Config: `sdkwork.app.config.json`, `deployments/deploy.yaml`, `SDKWORK_DATABASE_*`
+- Config: `agent.app.config.json`, `deployments/deploy.yaml`, `SDKWORK_DATABASE_*`
 
 ## 9. Verification
 

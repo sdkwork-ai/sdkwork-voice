@@ -3,7 +3,7 @@
 Environments: `development|test|staging|demo|production`. Commands run on the
 local WSL host by default; append `--host ssh://[user@]host[:port]` for remote
 targets. Image reference: `registry.sdkwork.com/apps/sdkwork-voice-standalone:0.1.0`
-(tag from `sdkwork.app.config.json` → `release.currentVersion`).
+(tag from `agent.app.config.json` → `release.currentVersion`).
 
 > ⚠️ The image build hook is wired, but `deployments/docker/bundle/` (deploy.sh + release.sh + compose + env) is missing yet: complete the bundle before `install`/`upgrade` (see OPERATIONS_SPEC.md §1.2).
 

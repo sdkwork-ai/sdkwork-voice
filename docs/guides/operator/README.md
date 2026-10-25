@@ -6,7 +6,7 @@ Deployment, monitoring, and incident response for SDKWork Voice.
 
 | Profile | Entry | Config |
 | --- | --- | --- |
-| Standalone server | `cargo run -p sdkwork-api-voice-standalone-gateway` | `deployments/deploy.yaml`, `sdkwork.app.config.json` |
+| Standalone server | `cargo run -p sdkwork-api-voice-standalone-gateway` | `deployments/deploy.yaml`, `agent.app.config.json` |
 | Container | `deployments/docker/Dockerfile` | `SDKWORK_VOICE_APP_ROOT=/app`, `SDKWORK_DATABASE_*` |
 | Embedded | `sdkwork-voice-embedded-bootstrap` router merge | Platform consumer wires IAM + database pools |
 | Workers | `@sdkwork/voice-generation-worker`, `@sdkwork/voice-drive-sync-worker` | Backend SDK credentials, poll intervals |

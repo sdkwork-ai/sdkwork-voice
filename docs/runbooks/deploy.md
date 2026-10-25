@@ -1,6 +1,6 @@
 # Runbook — sdkwork-voice 部署 / 升级 / 回滚（中文）
 
-适用环境：`development|test|staging|demo|production`。所有命令默认在本机 WSL 执行，远程主机加 `--host ssh://[user@]host[:port]`。镜像参考：`registry.sdkwork.com/apps/sdkwork-voice-standalone:0.1.0`（tag 取自 `sdkwork.app.config.json` → `release.currentVersion`）。
+适用环境：`development|test|staging|demo|production`。所有命令默认在本机 WSL 执行，远程主机加 `--host ssh://[user@]host[:port]`。镜像参考：`registry.sdkwork.com/apps/sdkwork-voice-standalone:0.1.0`（tag 取自 `agent.app.config.json` → `release.currentVersion`）。
 
 > ⚠️ 本模块镜像构建已接线，但 `deployments/docker/bundle/`（deploy.sh + release.sh + compose + env）尚未落地：`install`/`upgrade` 前需先补齐 bundle（参照 OPERATIONS_SPEC.md §1.2）。
 

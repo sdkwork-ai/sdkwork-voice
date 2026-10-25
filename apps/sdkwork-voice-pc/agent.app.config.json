@@ -1,67 +1,44 @@
 {
   "schemaVersion": 3,
-  "kind": "sdkwork.app",
+  "kind": "agent.app",
   "app": {
-    "key": "sdkwork-voice",
-    "name": "SDKWork Voice",
-    "displayName": "SDKWork Voice",
-    "description": "SDKWork voice and audio generation domain library and HTTP services.",
+    "key": "sdkwork-voice-pc",
+    "name": "SDKWork Voice PC",
+    "displayName": "SDKWork Voice PC",
+    "description": "Voice market and speech synthesis embed for SDKWork IM PC shell.",
     "vendor": "SDKWork",
-    "officialWebsiteUrl": "https://sdkwork.com/apps/sdkwork-voice",
-    "supportUrl": "https://sdkwork.com/support",
-    "privacyPolicyUrl": "https://sdkwork.com/privacy",
-    "termsOfServiceUrl": "https://sdkwork.com/terms",
-    "iconUrl": "https://cdn.sdkwork.com/apps/sdkwork-voice/assets/icon-1024.png",
-    "appType": "SDK",
+    "appType": "APP_HTML",
     "versionSource": "package.json",
     "identifiers": {
-      "packageName": "@sdkwork/voice-workspace",
-      "bundleId": null,
-      "desktopAppId": "com.sdkwork.voice",
-      "containerImage": "registry.sdkwork.com/apps/sdkwork-voice"
-    }
+      "packageName": "@sdkwork/voice-pc-workspace"
+    },
+    "officialWebsiteUrl": "https://sdkwork.com/apps/sdkwork-voice-pc"
   },
-  "backend": {
-    "profileKey": "backend-root-admin",
-    "ownerMode": "tenant",
-    "grantMode": "current",
-    "platform": "WEB",
-    "appId": null,
-    "tenantId": "100001",
-    "organizationId": "0",
-    "accessTokenPermissionScope": [
-      "voice.tasks.read",
-      "voice.tasks.write",
-      "voice.providerRoutes.read",
-      "voice.providerRoutes.write"
-    ]
-  },
+  "backend": {},
   "runtime": {
-    "family": "library",
-    "framework": "rust-domain-library",
+    "family": "server",
+    "framework": "vite-react",
     "runtimes": [
-      "LIBRARY",
-      "SERVER"
+      "DESKTOP"
     ],
     "deliveryModes": [
-      "DIRECT_DOWNLOAD",
-      "CONTAINER"
+      "EMBED"
     ],
-    "defaultPlatform": "LIBRARY",
+    "defaultPlatform": "DESKTOP",
     "defaultArchitecture": "noarch",
     "supportedDeploymentProfiles": [
-      "cloud",
-      "standalone"
+      "standalone",
+      "cloud"
     ],
     "defaultDeploymentProfile": "standalone"
   },
   "media": {
     "icons": {
       "primary": {
-        "id": "sdkwork-voice-primary-icon",
+        "id": "sdkwork-voice-pc-primary-icon",
         "type": "ICON",
         "purpose": "PRIMARY",
-        "url": "https://cdn.sdkwork.com/apps/sdkwork-voice/assets/icon-1024.png",
+        "url": "https://cdn.sdkwork.com/apps/sdkwork-voice-pc/assets/icon-1024.png",
         "platform": "APP",
         "locale": "en-US",
         "width": 1024,
@@ -82,10 +59,10 @@
     },
     "screenshots": [
       {
-        "id": "sdkwork-voice-web-screenshot",
+        "id": "sdkwork-voice-pc-web-screenshot",
         "type": "SCREENSHOT",
         "purpose": "CATALOG_SCREENSHOT",
-        "url": "https://cdn.sdkwork.com/apps/sdkwork-voice/media/web-screenshot.png",
+        "url": "https://cdn.sdkwork.com/apps/sdkwork-voice-pc/media/web-screenshot.png",
         "platform": "WEB",
         "locale": "en-US",
         "deviceClass": "BROWSER",
@@ -95,21 +72,21 @@
         "format": "PNG",
         "fileSizeBytes": 1048576,
         "alphaChannel": false,
-        "caption": "SDKWork Voice product screenshot.",
+        "caption": "SDKWork Voice PC product screenshot.",
         "sortOrder": 0,
         "enabled": true,
         "metadata": {
           "generatedPlaceholder": true,
-          "altText": "SDKWork Voice app screenshot."
+          "altText": "SDKWork Voice PC app screenshot."
         }
       }
     ],
     "previews": [
       {
-        "id": "sdkwork-voice-catalog-preview",
+        "id": "sdkwork-voice-pc-catalog-preview",
         "type": "PREVIEW_IMAGE",
         "purpose": "CATALOG_PREVIEW",
-        "url": "https://cdn.sdkwork.com/apps/sdkwork-voice/media/preview-cover.png",
+        "url": "https://cdn.sdkwork.com/apps/sdkwork-voice-pc/media/preview-cover.png",
         "platform": "WEB",
         "locale": "en-US",
         "width": 1600,
@@ -117,12 +94,12 @@
         "format": "PNG",
         "fileSizeBytes": 786432,
         "alphaChannel": false,
-        "caption": "SDKWork Voice preview.",
+        "caption": "SDKWork Voice PC preview.",
         "sortOrder": 0,
         "enabled": true,
         "metadata": {
           "generatedPlaceholder": true,
-          "altText": "SDKWork Voice preview cover."
+          "altText": "SDKWork Voice PC preview cover."
         }
       }
     ],
@@ -134,41 +111,43 @@
   "publish": {
     "status": "ACTIVE",
     "platforms": [
-      "API"
+      "WEB"
     ],
-    "config": {
-      "workspaceRoot": ".",
-      "framework": "rust-domain-library",
-      "managedBy": "sdkwork-voice"
-    },
     "installPlatforms": [
-      "API"
+      "WEB"
     ],
-    "defaultPackageId": "linux-x64-cloud-server-tar-gz",
+    "defaultPackageId": "linux-x64-standalone-server-tar-gz",
     "installSkill": {
       "name": "sdkwork-skills-app"
     },
     "stores": [],
-    "storeUrl": "https://sdkwork.com/apps/sdkwork-voice"
+    "storeUrl": "https://sdkwork.com/apps/sdkwork-voice-pc"
+  },
+  "environments": {
+    "development": {
+      "accessUrl": "http://localhost:18096",
+      "deployUrl": "http://localhost:18096",
+      "deployEnv": "dev"
+    }
   },
   "artifacts": {
     "installConfig": {
-      "defaultPackageId": "linux-x64-cloud-server-tar-gz",
-      "installCommand": "sdkwork install sdkwork-voice",
-      "launchCommand": "sdkwork open sdkwork-voice",
-      "uninstallCommand": "sdkwork uninstall sdkwork-voice",
+      "defaultPackageId": "linux-x64-standalone-server-tar-gz",
+      "installCommand": "sdkwork install sdkwork-voice-pc",
+      "launchCommand": "sdkwork open sdkwork-voice-pc",
+      "uninstallCommand": "sdkwork uninstall sdkwork-voice-pc",
       "packages": [
         {
-          "id": "linux-x64-cloud-server-tar-gz",
-          "name": "Sdkwork Voice cloud server archive",
+          "id": "linux-x64-standalone-server-tar-gz",
+          "name": "Sdkwork Voice Pc standalone server archive",
           "sourceType": "BINARY_URL",
           "packageFormat": "TAR_GZ",
           "platform": "API",
-          "url": "https://cdn.sdkwork.com/apps/sdkwork-voice/STABLE/0.1.0/linux-x64-cloud-server-tar-gz-0.1.0.tar.gz",
+          "url": "https://cdn.sdkwork.com/apps/sdkwork-voice-pc/STABLE/0.1.0/linux-x64-standalone-server-tar-gz-0.1.0.tar.gz",
           "architecture": "x64",
           "checksumAlgorithm": "SHA-256",
-          "checksum": "4e882301c059be3afa7ac9c20e2c8d48e10435d0ffdb0bcea381f18de3338a70",
-          "deploymentProfile": "cloud",
+          "checksum": "1bb058cf9ca26ebb0066e16e8e73a98afc6569b71c9d9ec16e36bccfa7426993",
+          "deploymentProfile": "standalone",
           "runtimeTarget": "server",
           "profileBinding": "fixed",
           "enabled": true,
@@ -177,16 +156,16 @@
           }
         },
         {
-          "id": "linux-x64-standalone-server-tar-gz",
-          "name": "Sdkwork Voice standalone server archive",
+          "id": "linux-x64-cloud-server-tar-gz",
+          "name": "Sdkwork Voice Pc cloud server archive",
           "sourceType": "BINARY_URL",
           "packageFormat": "TAR_GZ",
           "platform": "API",
-          "url": "https://cdn.sdkwork.com/apps/sdkwork-voice/STABLE/0.1.0/linux-x64-standalone-server-tar-gz-0.1.0.tar.gz",
+          "url": "https://cdn.sdkwork.com/apps/sdkwork-voice-pc/STABLE/0.1.0/linux-x64-cloud-server-tar-gz-0.1.0.tar.gz",
           "architecture": "x64",
           "checksumAlgorithm": "SHA-256",
-          "checksum": "0251fa3f4a4ab09d5e573c829dac1887410c5d0c7a1c25bc0e30a15dae979d48",
-          "deploymentProfile": "standalone",
+          "checksum": "fbd770e9e83fb517b06790b87b14093a7d4ff0df2363b5cec44217f920e27d05",
+          "deploymentProfile": "cloud",
           "runtimeTarget": "server",
           "profileBinding": "fixed",
           "enabled": true,
@@ -207,17 +186,17 @@
       {
         "version": "0.1.0",
         "releaseChannel": "STABLE",
-        "title": "SDKWork Voice 0.1.0",
-        "summary": "SDKWork Voice initialized standard release.",
-        "content": "Initial SDKWork App Standard v3 manifest for SDKWork Voice.",
+        "title": "SDKWork Voice PC 0.1.0",
+        "summary": "SDKWork Voice PC initialized standard release.",
+        "content": "Initial SDKWork App Standard v3 manifest for SDKWork Voice PC.",
         "highlights": [
           "SDKWork App Standard v3 configuration initialized",
           "platform_app projection metadata standardized",
           "Download package matrix normalized"
         ],
         "packageIds": [
-          "linux-x64-cloud-server-tar-gz",
-          "linux-x64-standalone-server-tar-gz"
+          "linux-x64-standalone-server-tar-gz",
+          "linux-x64-cloud-server-tar-gz"
         ],
         "publishedAt": "2026-05-07T00:00:00Z",
         "current": true,
@@ -234,7 +213,6 @@
   },
   "metadata": {
     "standardOwner": "voice-platform",
-    "initializedAt": "2026-06-30T00:00:00Z",
-    "deploymentConfig": "etc/sdkwork.deployment.config.json"
+    "parentAppKey": "sdkwork-voice"
   }
 }

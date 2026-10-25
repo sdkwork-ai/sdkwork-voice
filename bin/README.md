@@ -15,7 +15,7 @@ carries identity (`bin/lib/module.sh`) and thin dispatches.
 | `config.sh` / `doctor.sh` / `backup.sh` | operations lifecycle (`OPERATIONS_SPEC.md` §3–§5) |
 
 Declared app types: `server,pc`. Default image tag comes from
-`sdkwork.app.config.json` → `release.currentVersion`.
+`agent.app.config.json` → `release.currentVersion`.
 
 Flags: `--environment development|test|staging|demo|production` ·
 `--profile standalone|cloud` · `--host wsl|ssh://[user@]host[:port]` ·
