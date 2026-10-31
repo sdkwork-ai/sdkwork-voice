@@ -61,6 +61,17 @@ config/*.local.toml
 **/.cache/
 
 
+# Compiled emit written beside generated SDK sources (generator owns the .ts sources)
+sdks/**/generated/server-openapi/src/**/*.js
+sdks/**/generated/server-openapi/src/**/*.js.map
+sdks/**/generated/server-openapi/src/**/*.d.ts
+sdks/**/generated/server-openapi/src/**/*.d.ts.map
+sdks/**/*-typescript/src/index.js
+sdks/**/*-typescript/src/index.js.map
+sdks/**/*-typescript/src/index.d.ts
+sdks/**/*-typescript/src/index.d.ts.map
+
+
 # SDKWork local-only and generated artifacts
 .env
 .env.*
