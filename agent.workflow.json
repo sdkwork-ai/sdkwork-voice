@@ -9,12 +9,7 @@
   },
   "release": {
     "artifactPrefix": "sdkwork-voice",
-    "defaultVersion": "0.1.0",
-    "channels": [
-      "DEV",
-      "INTERNAL",
-      "STABLE"
-    ]
+    "defaultVersion": "0.1.0"
   },
   "targets": [
     {
