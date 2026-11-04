@@ -30,6 +30,11 @@
     "react-i18next": ">=17.0.0",
     "react-router": ">=7.0.0"
   },
+  "devDependencies": {
+    "@types/react": "catalog:",
+    "@types/react-dom": "catalog:",
+    "typescript": "catalog:"
+  },
   "sdkwork": {
     "workspace": "sdkwork-voice",
     "architecture": "mobile-react",
