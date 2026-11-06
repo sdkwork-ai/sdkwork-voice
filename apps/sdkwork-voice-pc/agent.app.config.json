@@ -14,7 +14,14 @@
     },
     "officialWebsiteUrl": "https://sdkwork.com/apps/sdkwork-voice-pc"
   },
-  "backend": {},
+  "backend": {
+    "appId": "sdkwork-voice-pc",
+    "tenantId": "100001",
+    "organizationId": "0",
+    "accessTokenPermissionScope": [
+      "iam:self"
+    ]
+  },
   "runtime": {
     "family": "server",
     "framework": "vite-react",
