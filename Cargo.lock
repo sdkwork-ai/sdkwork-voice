@@ -3001,6 +3001,7 @@ dependencies = [
  "sdkwork-database-sqlx",
  "sdkwork-routes-voice-app-api",
  "sdkwork-routes-voice-backend-api",
+ "sdkwork-utils-rust",
  "sdkwork-voice-drive-sync-processor",
  "sdkwork-voice-generation-provider-adapter",
  "sdkwork-voice-generation-provider-spi",

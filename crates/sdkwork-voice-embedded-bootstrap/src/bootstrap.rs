@@ -14,6 +14,7 @@ use sdkwork_voice_generation_repository_sqlx::{
     bootstrap_voice_database, connect_voice_database_pool_from_env, SqlVoiceStore,
 };
 use sdkwork_voice_service::{VoiceArtifactDriveSyncProcessorPort, VoiceGenerationService};
+use sdkwork_utils_rust::service_base_url::registry_base_url_or;
 
 pub struct EmbeddedVoiceAssembly {
     pub router: Router,
@@ -68,13 +69,20 @@ pub async fn assemble_embedded_voice_application_router(
 }
 
 pub fn build_voice_generation_service_from_env() -> Result<Arc<VoiceGenerationService>, String> {
-    let base_url = std::env::var("SDKWORK_CLOUDROUTER_OPEN_API_BASE_URL")
+    let configured = std::env::var("SDKWORK_CLOUDROUTER_OPEN_API_BASE_URL")
         .or_else(|_| std::env::var("CLOUDROUTER_OPEN_API_BASE_URL"))
-        .map_err(|_| {
-            "SDKWORK_CLOUDROUTER_OPEN_API_BASE_URL (or CLOUDROUTER_OPEN_API_BASE_URL) is required"
-                .to_string()
-        })?;
-    let client = SdkworkAiClient::new(SdkworkConfig::new(base_url.trim()))
+        .map(|value| value.trim().to_string())
+        .unwrap_or_default();
+    // DISCOVERY_SPEC §12.1: registry-first, configured value as degradation.
+    let base_url = registry_base_url_or("cloudrouter", &configured);
+    if base_url.is_empty() {
+        return Err(
+            "SDKWORK_CLOUDROUTER_OPEN_API_BASE_URL (or CLOUDROUTER_OPEN_API_BASE_URL) is required, \
+             or the HTTP service registry must have a healthy cloudrouter instance"
+                .to_string(),
+        );
+    }
+    let client = SdkworkAiClient::new(SdkworkConfig::new(&base_url))
         .map_err(|error| format!("speech generation SDK client init failed: {error}"))?;
     if let Ok(api_key) = std::env::var("SDKWORK_CLOUDROUTER_OPEN_API_KEY") {
         if !api_key.trim().is_empty() {

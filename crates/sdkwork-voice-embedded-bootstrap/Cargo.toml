@@ -27,5 +27,6 @@ sdkwork-voice-service.workspace = true
 sdkwork-voice-generation-provider-adapter.workspace = true
 sdkwork-voice-generation-provider-spi.workspace = true
 sdkwork-web-bootstrap = { workspace = true, features = ["sqlx"] }
+sdkwork-utils-rust.workspace = true
 tracing.workspace = true
 tokio = { workspace = true, features = ["macros", "rt-multi-thread"] }
