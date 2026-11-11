@@ -5,19 +5,16 @@ use sdkwork_voice_generation_provider_spi::{
 
 #[derive(Default, serde::Deserialize)]
 #[serde(deny_unknown_fields)]
-struct OpenAiSpeechVendorParameters {
-    metadata: Option<std::collections::HashMap<String, String>>,
-}
+struct OpenAiSpeechVendorParameters {}
 
 pub fn build_speech_generation_request(
     command: &VoiceSpeechGenerationCommand,
 ) -> VoiceGenerationProviderResult<OpenAiSpeechCreateRequest> {
     command.validate()?;
-    let parameters: OpenAiSpeechVendorParameters =
+    let _parameters: OpenAiSpeechVendorParameters =
         decode_vendor_parameters(command, "openai.speech-generation.v1")?;
     Ok(OpenAiSpeechCreateRequest {
         input: command.input.trim().to_string(),
-        metadata: parameters.metadata,
         model: command.model.trim().to_string(),
         response_format: Some(command.response_format.as_str().to_string()),
         speed: command.speed,
