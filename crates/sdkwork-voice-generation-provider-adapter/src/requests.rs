@@ -19,6 +19,7 @@ pub fn build_speech_generation_request(
         response_format: Some(command.response_format.as_str().to_string()),
         speed: command.speed,
         voice: command.voice.trim().to_string(),
+        ..Default::default()
     })
 }
 
