@@ -22,7 +22,7 @@
       "runtimeTarget": "browser",
       "bindings": {},
       "accessToken": {
-        "appId": "sdkwork-voice-pc",
+        "appIdEnv": "SDKWORK_DEPLOY_APPLICATION_ID",
         "tenantId": "100001",
         "organizationId": "0",
         "permissionScope": [
