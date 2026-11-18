@@ -2739,6 +2739,7 @@ dependencies = [
  "jsonwebtoken",
  "reqwest 0.13.5",
  "sdkwork-utils-rust",
+ "sdkwork-web-core",
  "serde",
  "serde_json",
  "tokio",
