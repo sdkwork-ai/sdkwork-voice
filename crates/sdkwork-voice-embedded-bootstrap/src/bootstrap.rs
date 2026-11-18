@@ -1,10 +1,17 @@
 use std::sync::Arc;
 
+// identity:service - the caller-less assembly path (uild_voice_generation_service_from_env)
+// is a bootstrap/service-identity builder; a route that serves a user MUST use
+// uild_voice_generation_service_for_caller, which binds the caller pair
+// (APP_SDK_INTEGRATION_SPEC.md section 5.2.1). No route wires speech generation yet.
+
 use axum::Router;
 use cloudrouter_open_sdk::{SdkworkAiClient, SdkworkConfig};
 use sdkwork_database_sqlx::{create_any_pool_from_config, DatabasePool};
 use sdkwork_routes_voice_app_api::{VoiceAppApiServicePort, VoiceAppRuntimeService};
 use sdkwork_routes_voice_backend_api::{VoiceBackendApiServicePort, VoiceBackendRuntimeService};
+use sdkwork_utils_rust::caller_identity::{CallerCredentials, CallerTokenKind};
+use sdkwork_utils_rust::service_base_url::registry_base_url_or;
 use sdkwork_voice_drive_sync_processor::VoiceDriveSyncProcessor;
 use sdkwork_voice_generation_provider_adapter::{
     VoiceGenerationProviderAdapter, VOICE_GENERATION_PROVIDER_ADAPTER_ID,
@@ -14,7 +21,6 @@ use sdkwork_voice_generation_repository_sqlx::{
     bootstrap_voice_database, connect_voice_database_pool_from_env, SqlVoiceStore,
 };
 use sdkwork_voice_service::{VoiceArtifactDriveSyncProcessorPort, VoiceGenerationService};
-use sdkwork_utils_rust::service_base_url::registry_base_url_or;
 
 pub struct EmbeddedVoiceAssembly {
     pub router: Router,
@@ -89,6 +95,49 @@ pub fn build_voice_generation_service_from_env() -> Result<Arc<VoiceGenerationSe
             client.set_api_key(api_key.trim());
         }
     }
+    assemble_voice_generation_service(client)
+}
+
+/// Builds the speech generation service for one caller scope.
+///
+/// APP_SDK_INTEGRATION_SPEC.md §5.2.1: a route that serves a user must use this
+/// builder so the cloud-router hop authenticates as that caller instead of the
+/// deployment. The caller-less builder above stays the declared service-identity
+/// path for background work.
+pub fn build_voice_generation_service_for_caller(
+    caller: &CallerCredentials,
+) -> Result<Arc<VoiceGenerationService>, String> {
+    let configured = std::env::var("SDKWORK_CLOUDROUTER_OPEN_API_BASE_URL")
+        .or_else(|_| std::env::var("CLOUDROUTER_OPEN_API_BASE_URL"))
+        .map(|value| value.trim().to_string())
+        .unwrap_or_default();
+    // DISCOVERY_SPEC §12.1: registry-first, configured value as degradation.
+    let base_url = registry_base_url_or("cloudrouter", &configured);
+    if base_url.is_empty() {
+        return Err(
+            "SDKWORK_CLOUDROUTER_OPEN_API_BASE_URL (or CLOUDROUTER_OPEN_API_BASE_URL) is required, \
+             or the HTTP service registry must have a healthy cloudrouter instance"
+                .to_string(),
+        );
+    }
+    let client = SdkworkAiClient::new(SdkworkConfig::new(&base_url))
+        .map_err(|error| format!("speech generation SDK client init failed: {error}"))?;
+    if !caller.is_empty() {
+        caller.apply_typed(|kind, token| match kind {
+            CallerTokenKind::Auth => {
+                client.set_auth_token(token);
+            }
+            CallerTokenKind::Access => {
+                client.set_access_token(token);
+            }
+        });
+    }
+    assemble_voice_generation_service(client)
+}
+
+fn assemble_voice_generation_service(
+    client: SdkworkAiClient,
+) -> Result<Arc<VoiceGenerationService>, String> {
     let registry = VoiceGenerationProviderRegistry::builder()
         .register(Arc::new(VoiceGenerationProviderAdapter::new(client)))
         .map_err(|error| format!("voice provider registration failed: {error}"))?

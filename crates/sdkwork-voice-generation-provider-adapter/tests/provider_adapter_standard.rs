@@ -32,23 +32,25 @@ fn sdk_route_is_owned_only_by_the_adapter() {
 }
 
 #[test]
-fn maps_common_and_versioned_vendor_parameters_to_sdk_request() {
+fn maps_the_speech_request_to_the_regenerated_sdk_model() {
+    let command = command();
+    let request = build_speech_generation_request(&command).expect("request");
+    assert_eq!(request.model, "gpt-4o-mini-tts");
+    assert_eq!(request.response_format.as_deref(), Some("mp3"));
+    assert!(request.instructions.is_none());
+    assert!(request.stream_format.is_none());
+}
+
+#[test]
+fn rejects_the_removed_metadata_vendor_parameter() {
     let mut command = command();
     command.vendor_parameters = Some(VoiceGenerationVendorParameters {
         schema: "openai.speech-generation.v1".to_string(),
         values: serde_json::json!({ "metadata": { "scene": "narration" } }),
     });
-    let request = build_speech_generation_request(&command).expect("request");
-    assert_eq!(request.model, "gpt-4o-mini-tts");
-    assert_eq!(request.response_format.as_deref(), Some("mp3"));
-    assert_eq!(
-        request
-            .metadata
-            .as_ref()
-            .and_then(|metadata| metadata.get("scene"))
-            .map(String::as_str),
-        Some("narration")
-    );
+    let error = build_speech_generation_request(&command)
+        .expect_err("the regenerated SDK no longer carries metadata");
+    assert!(error.to_string().contains("metadata"));
 }
 
 #[test]

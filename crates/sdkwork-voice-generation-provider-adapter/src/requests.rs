@@ -15,12 +15,20 @@ pub fn build_speech_generation_request(
     command.validate()?;
     let parameters: OpenAiSpeechVendorParameters =
         decode_vendor_parameters(command, "openai.speech-generation.v1")?;
+    if parameters.metadata.is_some() {
+        // The regenerated cloudrouter open-api speech request no longer carries
+        // a metadata map; accepting it silently would drop caller data.
+        return Err(VoiceGenerationProviderError::UnsupportedParameter(
+            "the cloudrouter speech request no longer accepts metadata".to_string(),
+        ));
+    }
     Ok(OpenAiSpeechCreateRequest {
         input: command.input.trim().to_string(),
-        metadata: parameters.metadata,
+        instructions: None,
         model: command.model.trim().to_string(),
         response_format: Some(command.response_format.as_str().to_string()),
         speed: command.speed,
+        stream_format: None,
         voice: command.voice.trim().to_string(),
     })
 }
