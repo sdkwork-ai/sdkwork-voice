@@ -5,23 +5,14 @@ use sdkwork_voice_generation_provider_spi::{
 
 #[derive(Default, serde::Deserialize)]
 #[serde(deny_unknown_fields)]
-struct OpenAiSpeechVendorParameters {
-    metadata: Option<std::collections::HashMap<String, String>>,
-}
+struct OpenAiSpeechVendorParameters {}
 
 pub fn build_speech_generation_request(
     command: &VoiceSpeechGenerationCommand,
 ) -> VoiceGenerationProviderResult<OpenAiSpeechCreateRequest> {
     command.validate()?;
-    let parameters: OpenAiSpeechVendorParameters =
+    let _parameters: OpenAiSpeechVendorParameters =
         decode_vendor_parameters(command, "openai.speech-generation.v1")?;
-    if parameters.metadata.is_some() {
-        // The regenerated cloudrouter open-api speech request no longer carries
-        // a metadata map; accepting it silently would drop caller data.
-        return Err(VoiceGenerationProviderError::UnsupportedParameter(
-            "the cloudrouter speech request no longer accepts metadata".to_string(),
-        ));
-    }
     Ok(OpenAiSpeechCreateRequest {
         input: command.input.trim().to_string(),
         instructions: None,
@@ -30,6 +21,7 @@ pub fn build_speech_generation_request(
         speed: command.speed,
         stream_format: None,
         voice: command.voice.trim().to_string(),
+        ..Default::default()
     })
 }
 
